@@ -60,15 +60,15 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-2 text-sm text-primary-foreground/70">
                 <Phone className="w-4 h-4 mt-0.5 text-accent" />
-                +91 99999 99999
+                +91 98222 10941
               </li>
               <li className="flex items-start gap-2 text-sm text-primary-foreground/70">
                 <Mail className="w-4 h-4 mt-0.5 text-accent" />
-                info@reinsureservices.com
+                rensureinsurance@gmail.com
               </li>
               <li className="flex items-start gap-2 text-sm text-primary-foreground/70">
                 <MapPin className="w-4 h-4 mt-0.5 text-accent" />
-                New Delhi, India
+                Office No. 203, 2204, Velstand, Mundhawa Kharadi Road, Tukaram Nagar, Opposite Reliance Mart, Kharadi, Haaveli, Pune - 411014
               </li>
             </ul>
           </div>

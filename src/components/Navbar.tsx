@@ -67,7 +67,7 @@ const Navbar = () => {
 
         <div className="hidden lg:flex items-center gap-3">
           <a
-            href="tel:+919999999999"
+            href="tel:+919822210941"
             className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
               scrolled ? "text-foreground" : "text-primary-foreground"
             }`}

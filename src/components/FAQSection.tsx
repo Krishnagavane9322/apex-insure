@@ -1,34 +1,49 @@
+import { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { api } from "@/lib/api";
 
-const faqs = [
-  {
-    q: "What types of insurance do you offer?",
-    a: "We specialize in commercial vehicle insurance including third party, comprehensive, and owner-driver personal accident covers. We also offer custom business insurance plans.",
-  },
-  {
-    q: "How fast is the claim settlement process?",
-    a: "Most claims are processed within 7-10 working days. Our dedicated claim support team assists you via phone and WhatsApp throughout the entire process.",
-  },
-  {
-    q: "Can I pay my premium in installments?",
-    a: "Yes! We offer flexible EMI and part-payment options so you can get covered without any financial burden.",
-  },
-  {
-    q: "Do you provide roadside assistance?",
-    a: "Absolutely. Our comprehensive plans include 24/7 roadside assistance and doorstep vehicle support across India.",
-  },
-  {
-    q: "How do I get a quote?",
-    a: "Simply fill out our contact form or call us directly. You'll receive a competitive quote within minutes from our expert advisors.",
-  },
-];
+interface FAQ {
+  _id: string;
+  question: string;
+  answer: string;
+}
 
-const FAQSection = () => (
+const FAQSection = () => {
+  const [faqs, setFaqs] = useState<FAQ[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFAQs = async () => {
+      try {
+        const response = await api.getFAQs();
+        if (response.success && response.data) {
+          setFaqs(response.data as FAQ[]);
+        }
+      } catch (error) {
+        console.error("Failed to fetch FAQs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFAQs();
+  }, []);
+
+  if (loading) {
+    return (
+      <section id="faqs" className="section-padding">
+        <div className="container-max">
+          <div className="text-center">Loading FAQs...</div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
   <section id="faqs" className="section-padding">
     <div className="container-max">
       <div className="text-center max-w-2xl mx-auto mb-14">
@@ -44,15 +59,15 @@ const FAQSection = () => (
         <Accordion type="single" collapsible className="space-y-3">
           {faqs.map((f, i) => (
             <AccordionItem
-              key={i}
+              key={f._id}
               value={`faq-${i}`}
               className="glass-card px-6 border-none"
             >
               <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline">
-                {f.q}
+                {f.question}
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground leading-relaxed">
-                {f.a}
+                {f.answer}
               </AccordionContent>
             </AccordionItem>
           ))}
@@ -61,5 +76,6 @@ const FAQSection = () => (
     </div>
   </section>
 );
+};
 
 export default FAQSection;

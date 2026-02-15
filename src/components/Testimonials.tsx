@@ -1,34 +1,52 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { api } from "@/lib/api";
 
-const reviews = [
-  {
-    name: "Rajesh Kumar",
-    role: "Fleet Owner, Delhi",
-    text: "Fast claim processing and personal attention. Reinsure made my commercial vehicle insurance hassle-free. Highly recommended!",
-  },
-  {
-    name: "Priya Sharma",
-    role: "Business Owner, Mumbai",
-    text: "The EMI facility and transparent pricing won me over. I've been with Reinsure for 3 years and counting.",
-  },
-  {
-    name: "Anil Mehta",
-    role: "Transport Company, Jaipur",
-    text: "Their 24/7 claim support saved me during an emergency. Professional, quick, and genuinely caring.",
-  },
-  {
-    name: "Sunita Verma",
-    role: "Individual Policyholder, Bangalore",
-    text: "I never thought insurance could be this simple. The team at Reinsure explained everything clearly and I got covered the same day.",
-  },
-];
+interface Testimonial {
+  _id: string;
+  name: string;
+  role: string;
+  text: string;
+  rating: number;
+}
 
 const Testimonials = () => {
+  const [reviews, setReviews] = useState<Testimonial[]>([]);
   const [current, setCurrent] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const response = await api.getTestimonials();
+        if (response.success && response.data) {
+          setReviews(response.data as Testimonial[]);
+        }
+      } catch (error) {
+        console.error("Failed to fetch testimonials:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTestimonials();
+  }, []);
 
   const prev = () => setCurrent((c) => (c === 0 ? reviews.length - 1 : c - 1));
   const next = () => setCurrent((c) => (c === reviews.length - 1 ? 0 : c + 1));
+
+  if (loading) {
+    return (
+      <section id="testimonials" className="section-padding section-alt">
+        <div className="container-max">
+          <div className="text-center">Loading testimonials...</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (reviews.length === 0) {
+    return null;
+  }
 
   const r = reviews[current];
 
