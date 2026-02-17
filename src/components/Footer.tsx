@@ -78,7 +78,14 @@ const Footer = () => {
 
         <div className="border-t border-primary-foreground/10 mt-12 pt-8 text-center text-sm text-primary-foreground/50">
           <p>© {new Date().getFullYear()} Reinsure Services. All rights reserved.</p>
-          <div className="mt-2">
+          <div className="mt-2 flex items-center justify-center gap-4">
+            <Link 
+              to="/privacy-policy" 
+              className="text-xs text-primary-foreground/30 hover:text-accent transition-colors"
+            >
+              Privacy Policy
+            </Link>
+            <span className="text-primary-foreground/20">•</span>
             <Link 
               to="/admin/login" 
               className="text-xs text-primary-foreground/30 hover:text-accent transition-colors"
