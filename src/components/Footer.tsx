@@ -70,7 +70,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start gap-2 text-sm text-primary-foreground/70">
                 <MapPin className="w-4 h-4 mt-0.5 text-accent" />
-                Office No. 203, 2204, Velstand, Mundhawa Kharadi Road, Tukaram Nagar, Opposite Reliance Mart, Kharadi, Haaveli, Pune - 411014
+                508, Zenith Complex, Near Sakhar Sankul, Shivajinagar Metro Station, Pune
               </li>
             </ul>
           </div>
