@@ -112,8 +112,8 @@ const ContactSection = () => {
                 <MapPin className="w-6 h-6 text-accent mt-0.5" />
                 <div>
                   <p className="font-semibold text-foreground">Visit Us</p>
-                  <p className="text-muted-foreground text-sm">
-                    Office No. 203, 2204, Velstand, Mundhawa Kharadi Road, Tukaram Nagar, Opposite Reliance Mart, Kharadi, Haaveli, Pune - 411014
+                  <p className="text-sm text-muted-foreground">
+                    508, Zenith Complex, Near Sakhar Sankul, Shivajinagar Metro Station, Pune
                   </p>
                 </div>
               </div>
