@@ -2,9 +2,12 @@ import { useState } from "react";
 import { Phone, Mail, MapPin, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { api } from "@/lib/api";
+import { useTracking } from "@/hooks/useTracking";
+import { trackFormSubmit } from "@/lib/conversionTracking";
 
 const ContactSection = () => {
   const { toast } = useToast();
+  const { utmParams, referrer } = useTracking();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -26,8 +29,20 @@ const ContactSection = () => {
 
     setIsSubmitting(true);
     try {
-      const response = await api.createQuote(form);
+      // Submit lead with UTM tracking data
+      const response = await api.createLead({
+        ...form,
+        ...utmParams,
+        referrer,
+      });
+
       if (response.success) {
+        // Fire conversion tracking events
+        trackFormSubmit({
+          service: form.service,
+          email: form.email,
+        });
+
         toast({
           title: "Quote request submitted!",
           description: "Our team will contact you shortly.",

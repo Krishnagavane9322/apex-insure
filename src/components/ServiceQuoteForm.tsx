@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { api } from "@/lib/api";
+import { useTracking } from "@/hooks/useTracking";
+import { trackFormSubmit } from "@/lib/conversionTracking";
 
 interface Service {
   _id: string;
@@ -17,6 +19,7 @@ interface ServiceQuoteFormProps {
 
 const ServiceQuoteForm = ({ service, onSuccess }: ServiceQuoteFormProps) => {
   const { toast } = useToast();
+  const { utmParams, referrer } = useTracking();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -51,7 +54,8 @@ const ServiceQuoteForm = ({ service, onSuccess }: ServiceQuoteFormProps) => {
 
     setIsSubmitting(true);
     try {
-      const quoteData = {
+      // Submit lead with UTM tracking data
+      const leadData = {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
@@ -64,11 +68,19 @@ const ServiceQuoteForm = ({ service, onSuccess }: ServiceQuoteFormProps) => {
         numberOfMembers: formData.numberOfMembers,
         emiRequested: formData.emiRequested,
         message: formData.message,
+        ...utmParams,
+        referrer,
       };
 
-      const response = await api.createQuote(quoteData);
+      const response = await api.createLead(leadData);
       
       if (response.success) {
+        // Fire conversion tracking events
+        trackFormSubmit({
+          service: service.title,
+          email: formData.email,
+        });
+
         toast({
           title: "Quote Request Submitted!",
           description: "Our team will contact you shortly with the best EMI options.",

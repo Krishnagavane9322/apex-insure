@@ -1,4 +1,6 @@
 import { Phone, Mail, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
+
 
 const Footer = () => {
   const scrollTo = (id: string) => {
@@ -76,6 +78,14 @@ const Footer = () => {
 
         <div className="border-t border-primary-foreground/10 mt-12 pt-8 text-center text-sm text-primary-foreground/50">
           <p>© {new Date().getFullYear()} Reinsure Services. All rights reserved.</p>
+          <div className="mt-2">
+            <Link 
+              to="/admin/login" 
+              className="text-xs text-primary-foreground/30 hover:text-accent transition-colors"
+            >
+              Admin
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
