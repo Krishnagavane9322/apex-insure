@@ -17,7 +17,7 @@ const Footer = () => {
               <div className="w-9 h-9 rounded-lg bg-accent flex items-center justify-center">
                 <span className="text-accent-foreground font-bold text-lg">R</span>
               </div>
-              <span className="font-display font-bold text-xl">Reinsure</span>
+              <span className="font-display font-bold text-xl">Reinsure Services</span>
             </div>
             <p className="text-primary-foreground/70 text-sm leading-relaxed">
               Trusted insurance advisory firm providing tailored coverage solutions

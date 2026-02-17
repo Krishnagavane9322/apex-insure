@@ -38,15 +38,15 @@ const Navbar = () => {
     >
       <div className="container-max flex items-center justify-between px-4 sm:px-6 lg:px-8 h-16 lg:h-20">
         <a href="#home" className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-lg">R</span>
+          <div className="w-9 h-9 rounded-lg bg-accent flex items-center justify-center">
+            <span className="text-accent-foreground font-bold text-lg">R</span>
           </div>
           <span
             className={`font-display font-bold text-xl transition-colors ${
               scrolled ? "text-foreground" : "text-primary-foreground"
             }`}
           >
-            Reinsure
+            Reinsure Services
           </span>
         </a>
 
