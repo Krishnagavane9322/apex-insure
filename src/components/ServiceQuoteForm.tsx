@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Truck, Car, Bus, LayoutGrid } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { api } from "@/lib/api";
 import { useTracking } from "@/hooks/useTracking";
@@ -49,6 +50,11 @@ const ServiceQuoteForm = ({ service, onSuccess }: ServiceQuoteFormProps) => {
     
     if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim()) {
       toast({ title: "Please fill all required fields", variant: "destructive" });
+      return;
+    }
+
+    if (service.category === 'vehicle' && service.title !== 'Long Term Two Wheeler Insurance' && !formData.vehicleType) {
+      toast({ title: "Please select a vehicle type", variant: "destructive" });
       return;
     }
 
@@ -106,6 +112,43 @@ const ServiceQuoteForm = ({ service, onSuccess }: ServiceQuoteFormProps) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
+      {/* Vehicle-specific fields - MOVED TO TOP */}
+      {service.category === 'vehicle' && service.title !== 'Long Term Two Wheeler Insurance' && (
+        <div className="space-y-6">
+          <div className="text-center">
+            <label className="block text-xl font-display font-bold text-primary mb-6">
+              Choose Vehicle Type
+            </label>
+            <div className="flex flex-wrap justify-center gap-4">
+              {[
+                { id: 'goods', label: 'Goods Carrying', icon: Truck },
+                { id: 'taxi', label: 'Taxi upto 6 pass.', icon: Car },
+                { id: 'bus', label: 'Bus', icon: Bus },
+                { id: 'others', label: 'Others', icon: LayoutGrid },
+              ].map((type) => {
+                const Icon = type.icon;
+                const isSelected = formData.vehicleType === type.label;
+                return (
+                  <button
+                    key={type.id}
+                    type="button"
+                    onClick={() => setFormData(prev => ({ ...prev, vehicleType: type.label, subType: type.label }))}
+                    className={`flex flex-col items-center justify-center w-28 h-28 rounded-xl border-2 transition-all p-3 gap-2 ${
+                      isSelected 
+                        ? 'border-[#E89344] bg-[#E89344] text-white shadow-lg scale-105' 
+                        : 'border-[#1E3A8A] bg-white text-[#1E3A8A] hover:border-[#E89344]/60 hover:shadow-md'
+                    }`}
+                  >
+                    <Icon className={`w-8 h-8 ${isSelected ? 'text-white' : 'text-[#1E3A8A]'}`} />
+                    <span className="text-xs font-bold leading-tight uppercase tracking-wide text-center">{type.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Personal Details */}
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
@@ -151,7 +194,7 @@ const ServiceQuoteForm = ({ service, onSuccess }: ServiceQuoteFormProps) => {
       </div>
 
       {/* Service-Specific Fields */}
-      {service.subTypes.length > 0 && (
+      {service.subTypes.length > 0 && service.category !== 'vehicle' && (
         <div>
           <label className="block text-sm font-semibold text-foreground mb-2">
             {service.category === 'health' ? 'Plan Type' : 'Select Type'}
@@ -172,35 +215,37 @@ const ServiceQuoteForm = ({ service, onSuccess }: ServiceQuoteFormProps) => {
         </div>
       )}
 
-      {/* Vehicle-specific fields */}
+      {/* Vehicle-specific coverage fields */}
       {service.category === 'vehicle' && service.title !== 'Long Term Two Wheeler Insurance' && (
-        <div>
-          <label className="block text-sm font-semibold text-foreground mb-2">
-            Coverage Type
-          </label>
-          <div className="flex gap-4">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="radio"
-                name="coverageType"
-                value="comprehensive"
-                checked={formData.coverageType === 'comprehensive'}
-                onChange={handleChange}
-                className="w-4 h-4 text-primary"
-              />
-              <span className="text-foreground">Comprehensive</span>
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-semibold text-foreground mb-2">
+              Coverage Type
             </label>
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="radio"
-                name="coverageType"
-                value="third-party"
-                checked={formData.coverageType === 'third-party'}
-                onChange={handleChange}
-                className="w-4 h-4 text-primary"
-              />
-              <span className="text-foreground">Third Party</span>
-            </label>
+            <div className="flex gap-4">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="coverageType"
+                  value="comprehensive"
+                  checked={formData.coverageType === 'comprehensive'}
+                  onChange={handleChange}
+                  className="w-4 h-4 text-primary"
+                />
+                <span className="text-foreground">Comprehensive</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="coverageType"
+                  value="third-party"
+                  checked={formData.coverageType === 'third-party'}
+                  onChange={handleChange}
+                  className="w-4 h-4 text-primary"
+                />
+                <span className="text-foreground">Third Party</span>
+              </label>
+            </div>
           </div>
         </div>
       )}

@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Phone } from "lucide-react";
+import QuoteModal from "./QuoteModal";
+import logo from "../assets/logo.png";
 
 const navLinks = [
   { label: "Home", href: "#home" },
@@ -15,6 +17,7 @@ const navLinks = [
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [quoteOpen, setQuoteOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -37,17 +40,14 @@ const Navbar = () => {
       }`}
     >
       <div className="container-max flex items-center justify-between px-4 sm:px-6 lg:px-8 h-16 lg:h-20">
-        <a href="#home" className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-lg bg-accent flex items-center justify-center">
-            <span className="text-accent-foreground font-bold text-lg">R</span>
-          </div>
-          <span
-            className={`font-display font-bold text-xl transition-colors ${
-              scrolled ? "text-foreground" : "text-primary-foreground"
+        <a href="#home" className="flex items-center">
+          <img 
+            src={logo} 
+            alt="Reinsure Services" 
+            className={`h-10 lg:h-12 w-auto object-contain transition-all duration-300 ${
+              scrolled ? "" : "invert hue-rotate-180 brightness-125"
             }`}
-          >
-            Reinsure Services
-          </span>
+          />
         </a>
 
         {/* Desktop nav */}
@@ -76,12 +76,14 @@ const Navbar = () => {
             Call Us
           </a>
           <button
-            onClick={() => handleClick("#contact")}
+            onClick={() => setQuoteOpen(true)}
             className="btn-accent text-sm !px-5 !py-2"
           >
             Get a Quote
           </button>
         </div>
+
+        <QuoteModal isOpen={quoteOpen} onClose={() => setQuoteOpen(false)} />
 
         {/* Mobile toggle */}
         <button
@@ -110,7 +112,10 @@ const Navbar = () => {
               </button>
             ))}
             <button
-              onClick={() => handleClick("#contact")}
+              onClick={() => {
+                setMobileOpen(false);
+                setQuoteOpen(true);
+              }}
               className="btn-accent mt-3 text-center"
             >
               Get a Quote

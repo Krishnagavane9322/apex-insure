@@ -1,5 +1,6 @@
 import { Phone, Mail, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
+import logo from "../assets/logo.png";
 
 
 const Footer = () => {
@@ -13,11 +14,12 @@ const Footer = () => {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 rounded-lg bg-accent flex items-center justify-center">
-                <span className="text-accent-foreground font-bold text-lg">R</span>
-              </div>
-              <span className="font-display font-bold text-xl">Reinsure Services</span>
+            <div className="flex items-center mb-6">
+              <img 
+                src={logo} 
+                alt="Reinsure Services" 
+                className="h-12 w-auto object-contain invert hue-rotate-180 brightness-125" 
+              />
             </div>
             <p className="text-primary-foreground/70 text-sm leading-relaxed">
               Trusted insurance advisory firm providing tailored coverage solutions
