@@ -48,13 +48,12 @@ const Footer = () => {
 
           {/* Services */}
           <div>
-            <h4 className="font-display font-bold mb-4">Our Services</h4>
-            <ul className="space-y-2 text-sm text-primary-foreground/70">
+            <h4 className="font-display font-bold text-lg mb-6">Services</h4>
+            <ul className="space-y-4 text-sm text-primary-foreground/70">
               <li>Commercial Vehicle Insurance</li>
-              <li>Third Party Coverage</li>
-              <li>Comprehensive Plans</li>
-              <li>EMI & Part Payment</li>
-              <li>Claim Assistance</li>
+              <li>Two Wheeler Insurance</li>
+              <li>Long Term Two Wheeler Insurance</li>
+              <li>Health Insurance</li>
             </ul>
           </div>
 
