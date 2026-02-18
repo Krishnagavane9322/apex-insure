@@ -179,13 +179,10 @@ const ContactSection = () => {
                   className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="">Select a service</option>
-                  <option value="commercial-vehicle">
-                    Commercial Vehicle Insurance
-                  </option>
-                  <option value="comprehensive">Comprehensive Coverage</option>
-                  <option value="third-party">Third Party Insurance</option>
-                  <option value="business">Business Insurance</option>
-                  <option value="other">Other</option>
+                  <option value="commercial-vehicle">Commercial Vehicle Insurance</option>
+                  <option value="two-wheeler">Two Wheeler Insurance</option>
+                  <option value="long-term-two-wheeler">Long Term Two Wheeler Insurance</option>
+                  <option value="health">Health Insurance</option>
                 </select>
               </div>
             </div>
